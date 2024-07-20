@@ -1,25 +1,40 @@
-mod data_string;
-mod program_string;
-mod bct;
-mod dropper;
+enum Item {
+    Heavy,
+    Light,
+}
 
-fn main() {
-    let bct = BCT {
-        data: data_string::DataString::new(vec![
-            true
-        ]),
-        program: program_string::ProgramString::new(vec![
-            true
-        ]),
-    };
+mod container {
+    use super::*;
 
-    let program = bct.program.iter_loop();
-    while let Some(command) =  {
-        match command {
-            false => bct.data.delete_leftmost(),
-            true => {
-            
+    pub struct Container<const N: usize> {
+        contents: [Option<Item>; N],
+    }
+
+    impl<const N: usize> Container<N> {
+        pub fn drop(&mut self) -> Option<Item> {
+            for item in self.contents.iter_mut() {
+                if item.is_some() {
+                    return item.take();
+                }
             }
+            None
+        }
+
+        pub fn load(&mut self, new_item: Item) -> Result<(), ()> {
+            for item in self.contents.iter_mut() {
+                if item.is_none() {
+                    *item = Some(new_item);
+                    return Ok(());
+                }
+            }
+            Err(())
         }
     }
+}
+use container::Container;
+
+type Dropper = Container<9>;
+
+fn main() {
+
 }
