@@ -1,0 +1,25 @@
+# BCT in Minecraft
+
+## Program
+
+A looping string
+
+## Data
+
+3 methods:
+* Peek at beginning
+* Remove from beginning
+* Add to end
+
+## How that should work
+
+0 => delete leftmost data bit
+1 => next command, if leftmost data bit is 1, then copy that next command after the rightmost data bit
+
+## How to do leftmost data peeking
+
+1. Unlock the hopper for one tick, the hopper behind it stays locked
+2. Run checks on the item
+3. Check the flag
+4. If 0, make regular action
+5. If 1, push to data queue and set the flag to 0
